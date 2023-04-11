@@ -19,7 +19,22 @@
 */
 
 import Route from '@ioc:Adonis/Core/Route'
+import Application from '@ioc:Adonis/Core/Application'
 
 Route.get('/', async ({ view }) => {
   return view.render('welcome')
+})
+
+Route.get('/transferdininternet', async ({ view }) => {
+  return view.render('dininternet')
+})
+
+
+Route.post('/incarcadininternet', async ({ request ,view}) => {
+  const fisiere = request.files('fisiere')
+
+  for (let fisier of fisiere) {
+    await fisier.move(Application.tmpPath('uploads'))
+  }
+  return await view.render('succes')
 })
