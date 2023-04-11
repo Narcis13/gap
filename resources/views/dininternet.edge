@@ -13,7 +13,8 @@
     <div>
       <h3 class="title"> Transfer fisiere din reteaua INTERNET in reteaua MEDICALA </h3>
    
-            <form method="post" action="http://localhost:3336/incarcadininternet">
+            <form method="post" action="/incarcadininternet" enctype="multipart/form-data">
+            <input type="hidden" name="src" value={{src}}>
                 <label for="files">Selectati fisierele de transferat:</label>
                 <input type="file" id="fisiere" name="fisiere" multiple><br><br>
                 <input type="submit" value="Transfera!">

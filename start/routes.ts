@@ -19,22 +19,28 @@
 */
 
 import Route from '@ioc:Adonis/Core/Route'
-import Application from '@ioc:Adonis/Core/Application'
+//import Application from '@ioc:Adonis/Core/Application'
 
 Route.get('/', async ({ view }) => {
   return view.render('welcome')
 })
 
-Route.get('/transferdininternet', async ({ view }) => {
-  return view.render('dininternet')
+Route.get('/transferdininternet', async ({ request,view }) => {
+  let qs=request.qs()
+  //console.log(qs)
+  let src= qs.src||''
+  return view.render('dininternet',{src})
 })
 
 
 Route.post('/incarcadininternet', async ({ request ,view}) => {
   const fisiere = request.files('fisiere')
-
+  let src=request.body().src
+  let ip=request.ip()
   for (let fisier of fisiere) {
-    await fisier.move(Application.tmpPath('uploads'))
+    //console.log(request.ip())
+    await fisier.moveToDisk('./uploads',{name:fisier.clientName})
+   // await fisier.move(Application.tmpPath('uploads'))
   }
-  return await view.render('succes')
+  return await view.render('succes',{ip})
 })
